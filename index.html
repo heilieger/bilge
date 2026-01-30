@@ -2,48 +2,122 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Yemek Menüsü (4:3)</title>
+    <title>Yemek Menüsü (4:3 Safe Mode)</title>
     <style>
-        body { background: #1a1a1a; margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; font-family: Arial, sans-serif; overflow: hidden; }
+        /* Arka planı koyu griden açığa çektim (Hata ayıklama için) */
+        body { 
+            background: #444; 
+            margin: 0; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            font-family: Arial, sans-serif; 
+            overflow: hidden; 
+        }
         
-        /* 4:3 Oranlı Kutu Ayarı */
-        .box-4-3 {
+        /* 4:3 Oranı - Garantili Ölçüler */
+        .box-container {
             background-color: white;
-            width: 96vh; /* Yüksekliğin 1.33 katı (4:3 Landscape) */
-            height: 72vh;
+            width: 80vw; /* Ekran genişliğinin %80'i */
+            height: 60vw; /* 4:3 oranını korumak için genişliğin 0.75'i */
+            max-height: 90vh; /* Ekran yüksekliğini aşmaması için */
+            max-width: 120vh; /* Yüksekliğe göre genişlik sınırı */
             border: 15px solid #e30613;
-            border-radius: 40px;
+            border-radius: 30px;
             display: flex;
             flex-direction: column;
-            padding: 25px;
+            padding: 20px;
             text-align: center;
             box-sizing: border-box;
             position: relative;
-            box-shadow: 0 15px 50px rgba(0,0,0,0.6);
+            box-shadow: 0 0 50px rgba(0,0,0,0.8);
         }
 
         /* Arka Plan Filigranı (Ultra Şeffaf) */
-        .box-4-3::before {
-            content: "";
+        .bg-watermark {
             position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-image: url('i.png');
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: 60%; /* Oran 4:3 olduğu için logoyu biraz küçülttük */
-            opacity: 0.08; 
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60%;
+            opacity: 0.08; /* %8 Şeffaflık */
             z-index: 1;
+            pointer-events: none;
         }
 
-        .content { position: relative; z-index: 10; height: 100%; display: flex; flex-direction: column; }
+        .content { 
+            position: relative; 
+            z-index: 10; 
+            height: 100%; 
+            display: flex; 
+            flex-direction: column; 
+        }
         
-        h2 { font-size: 3.2rem; color: #e30613; margin: 10px 0 5px 0; font-weight: 900; }
-        #tarih { font-size: 1.5rem; color: #444; font-weight: bold; }
-        .divider { border-top: 3px solid #eee; margin: 12px 0; }
+        h2 { font-size: 3rem; color: #e30613; margin: 5px 0; font-weight: 900; }
+        #tarih { font-size: 1.4rem; color: #555; font-weight: bold; }
+        .line { border-top: 3px solid #eee; margin: 10px 0; }
 
         #menu-text {
             flex-grow: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            font-size: 2.6rem; /* 4:3'te alan genişlediği için
+            font-size: 2.2rem; 
+            font-weight: bold;
+            color: #000;
+            line-height: 1.3;
+        }
+
+        .footer { font-size: 1.6rem; color: #e30613; font-weight: bold; letter-spacing: 4px; }
+    </style>
+</head>
+<body>
+
+    <div class="box-container">
+        <img src="i.png" class="bg-watermark" alt="">
+
+        <div class="content">
+            <h2>YEMEK MENÜSÜ</h2>
+            <div id="tarih">--.--.----</div>
+            <div class="line"></div>
+            
+            <div id="menu-text">Yükleniyor...</div>
+            
+            <div class="line"></div>
+            <div class="footer">AFİYET OLSUN</div>
+        </div>
+    </div>
+
+    <script>
+        // En temel JavaScript yapıları (ES5)
+        var yemekler = {
+            "30.01.2026": "1.KURU KÖFTE PATATES<br>2.ERİŞTE<br>3.TARHANA ÇORBASI<br>4.SALATA",
+            "29.01.2026": "1.ETLİ MEVSİM TÜRLÜSÜ<br>2.MAKARNA (SOSLU)<br>3.MERCİMEK ÇORBASI<br>4.TATLI"
+        };
+
+        function menuyuGoster() {
+            var simdi = new Date();
+            var gun = simdi.getDate();
+            var ay = simdi.getMonth() + 1;
+            var yil = simdi.getFullYear();
+
+            if (gun < 10) { gun = "0" + gun; }
+            if (ay < 10) { ay = "0" + ay; }
+            
+            var bugun = gun + "." + ay + "." + yil;
+            document.getElementById('tarih').innerHTML = bugun;
+
+            var alan = document.getElementById('menu-text');
+            if (yemekler[bugun]) {
+                alan.innerHTML = yemekler[bugun];
+            } else {
+                alan.innerHTML = bugun + "<br>Menü Hazırlanıyor...";
+            }
+        }
+        
+        // window.onload beklemeden doğrudan tetikleyelim
+        menuyuGoster();
+    </script>
+</body>
+</html>
