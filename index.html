@@ -2,54 +2,73 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Bilge Koleji Menü</title>
+    <title>Bilge Koleji Kare Menü</title>
     <style>
-        body { background: #1a1a1a; color: white; margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; font-family: sans-serif; text-align: center; }
-        .box { background: white; color: black; border: 15px solid #ff0000; border-radius: 40px; padding: 40px; width: 80%; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        h1 { font-size: 2.5rem; margin: 0; color: #444; }
-        h2 { font-size: 4rem; color: #ff0000; margin: 10px 0; }
-        #date-field { font-size: 2rem; color: #888; margin-bottom: 20px; }
-        #menu-box { font-size: 3.5rem; font-weight: bold; color: #222; min-height: 200px; }
+        body {
+            background: #2c2c2c;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        /* Kare Kutu Ayarı */
+        .square-box {
+            background: white;
+            width: 80vh; /* Ekran yüksekliğine göre kare genişliği */
+            height: 80vh; /* Tam kare olması için genişlikle aynı */
+            border: 20px solid #e30613; /* Okul Kırmızısı */
+            border-radius: 40px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.6);
+        }
+
+        .header { border-bottom: 2px solid #ddd; padding-bottom: 15px; }
+        h1 { font-size: 2rem; color: #444; margin: 0; }
+        h2 { font-size: 3rem; color: #e30613; margin: 10px 0; font-weight: 900; }
+        .date { font-size: 1.5rem; color: #888; margin-bottom: 10px; }
+
+        .menu-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            font-size: 2.8rem; /* Kare içine sığması için optimize edildi */
+            font-weight: bold;
+            color: #222;
+            line-height: 1.2;
+        }
+
+        .footer { 
+            font-size: 1.8rem; 
+            color: #e30613; 
+            font-weight: bold; 
+            padding-top: 15px; 
+            border-top: 2px solid #ddd;
+        }
     </style>
 </head>
 <body>
-    <div class="box">
-        <h2>GÜNÜN MENÜSÜ</h2>
-        <div id="date-field">Tarih Bekleniyor...</div>
-        <div id="menu-box">JavaScript Başlatılamadı!</div>
+    <div class="square-box">
+        <div class="header">
+            <h2>YEMEK MENÜSÜ</h2>
+            <div id="tarih-label" class="date">--.--.----</div>
+        </div>
+        
+        <div id="menu-area" class="menu-content">
+            Yükleniyor...
+        </div>
+
+        <div class="footer">AFİYET OLSUN</div>
     </div>
 
     <script>
-        // PDF'deki Menü (30.01.2026 Bugün Dahil)
-        const menus = {
+        const menuData = {
             "30.01.2026": "Kuru Köfte Patates<br>Erişte<br>Tarhana Çorbası<br>Salata",
-            "29.01.2026": "Etli Mevsim Türlüsü<br>Soslu Makarna<br>Mercimek Çorbası<br>Tatlı"
-        };
-
-        function start() {
-            try {
-                const now = new Date();
-                const d = String(now.getDate()).padStart(2, '0');
-                const m = String(now.getMonth() + 1).padStart(2, '0');
-                const y = now.getFullYear();
-                const today = d + "." + m + "." + y;
-
-                document.getElementById('date-field').innerText = today;
-                
-                const yemek = menus[today];
-                if (yemek) {
-                    document.getElementById('menu-box').innerHTML = yemek;
-                } else {
-                    document.getElementById('menu-box').innerHTML = "Bu tarih için<br>menü girilmemiş.";
-                }
-            } catch (e) {
-                document.getElementById('menu-box').innerHTML = "HATA: " + e.message;
-            }
-        }
-
-        // Sayfa yüklenince doğrudan çalıştır
-        start();
-    </script>
-</body>
-</html>
-
+            "29.01.2026": "Etli Mevsim Türlüsü<br>Soslu Makarna<br>Mercimek Çorbası<br>Tatlı
