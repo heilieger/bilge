@@ -14,10 +14,11 @@
             font-family: 'Segoe UI', Arial, sans-serif; 
         }
 
+        /* Tam Kare Kutu */
         .square-box {
             background: white;
-            width: 88vh; 
-            height: 88vh; 
+            width: 85vh; 
+            height: 85vh; 
             border: 15px solid #e30613; 
             border-radius: 40px;
             display: flex;
@@ -28,33 +29,35 @@
             box-shadow: 0 10px 40px rgba(0,0,0,0.6);
         }
 
-        .header h1 { font-size: 1.6rem; color: #444; margin: 0; letter-spacing: 1px; }
-        .header h2 { font-size: 2.6rem; color: #e30613; margin: 5px 0; font-weight: 900; }
-        #date-label { font-size: 1.3rem; color: #888; margin-bottom: 5px; }
+        .header h1 { font-size: 1.4rem; color: #444; margin: 0; }
+        .header h2 { font-size: 2.4rem; color: #e30613; margin: 5px 0; font-weight: 900; }
+        #date-box { font-size: 1.2rem; color: #888; }
         
         .divider { border-top: 2px solid #eee; margin: 10px 0; }
 
-        .menu-content {
+        /* Menü Alanı - Yazı Boyutu Optimize Edildi */
+        #menu-box {
             flex-grow: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            font-size: 2.2rem; /* Taşmayı önlemek için küçültüldü */
+            font-size: 1.9rem; /* Taşmayı önlemek için küçültüldü */
             font-weight: bold;
             color: #222;
-            line-height: 1.25;
+            line-height: 1.2;
             padding: 0 10px;
+            overflow: hidden;
         }
 
-        /* Yeni Logo Kutusu */
-        .logo-box { 
+        /* Logo Alanı */
+        .logo-container { 
             margin: 10px 0; 
-            height: 100px; /* Logo yüksekliği */
+            height: 90px;
             display: flex;
             justify-content: center;
             align-items: center;
         }
-        .logo-box img {
+        .logo-container img {
             max-height: 100%;
             max-width: 100%;
             object-fit: contain;
@@ -64,7 +67,7 @@
             font-size: 1.6rem; 
             color: #e30613; 
             font-weight: bold; 
-            letter-spacing: 3px;
+            letter-spacing: 2px;
         }
     </style>
 </head>
@@ -73,50 +76,55 @@
         <div class="header">
             <h1>BİLGE KOLEJİ</h1>
             <h2>YEMEK MENÜSÜ</h2>
-            <div id="date-label">--.--.----</div>
+            <div id="date-box">...</div>
         </div>
         
         <div class="divider"></div>
         
-        <div id="menu-area" class="menu-content">
-            Yükleniyor...
-        </div>
+        <div id="menu-box">Yükleniyor...</div>
         
         <div class="divider"></div>
 
-        <div class="logo-box">
-            <img src="https://drive.google.com/uc?export=view&id=1ij6L2LMOHbry8nahXaEZSLeP7VMyg3g1" alt="Bilge Koleji Logo">
+        <div class="logo-container">
+            <img src="https://drive.google.com/uc?export=view&id=1ij6L2LMOHbry8nahXaEZSLeP7VMyg3g1" alt="Logo">
         </div>
         
         <div class="footer">AFİYET OLSUN</div>
     </div>
 
     <script>
-        const liste = {
+        // PDF verileri ve bugün (30.01.2026) listesi
+        const data = {
             "30.01.2026": "1.KURU KÖFTE PATATES<br>2.ERİŞTE<br>3.TARHANA ÇORBASI<br>4.SALATA",
             "29.01.2026": "1.ETLİ MEVSİM TÜRLÜSÜ<br>2.MAKARNA (SOSLU)<br>3.MERCİMEK ÇORBASI<br>4.TATLI",
             "28.01.2026": "1.FIRIN PİLİÇ PİRZOLA<br>2.SEB.BULGUR PİLAVI<br>3.DOMATES ÇORBASI<br>4.CACIK"
         };
 
-        function baslat() {
+        function startMenu() {
             try {
-                const simdi = new Date();
-                const g = String(simdi.getDate()).padStart(2, '0');
-                const a = String(simdi.getMonth() + 1).padStart(2, '0');
-                const y = simdi.getFullYear();
-                const bugun = g + "." + a + "." + y;
+                const now = new Date();
+                const d = String(now.getDate()).padStart(2, '0');
+                const m = String(now.getMonth() + 1).padStart(2, '0');
+                const y = now.getFullYear();
+                const today = d + "." + m + "." + y;
 
-                document.getElementById('date-label').innerText = bugun;
-                const alan = document.getElementById('menu-area');
-
-                if (liste[bugun]) {
-                    alan.innerHTML = liste[bugun];
+                document.getElementById('date-box').innerText = today;
+                
+                const menu = data[today];
+                const box = document.getElementById('menu-box');
+                
+                if (menu) {
+                    box.innerHTML = menu;
                 } else {
-                    alan.innerHTML = "Bugün için kayıtlı<br>menü bulunamadı.";
+                    box.innerHTML = "Bu tarih için<br>kayıtlı menü yok.";
                 }
-            } catch(e) { console.error(e); }
+            } catch (err) {
+                document.getElementById('menu-box').innerText = "Hata: " + err.message;
+            }
         }
-        baslat();
+        
+        // Doğrudan çalıştır
+        startMenu();
     </script>
 </body>
 </html>
