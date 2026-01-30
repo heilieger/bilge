@@ -2,59 +2,121 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Bilge Koleji Menü</title>
+    <title>Bilge Koleji Yemek Menüsü</title>
     <style>
-        body { background: #1a1a1a; margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; font-family: sans-serif; text-align: center; }
-        .box { background: white; border: 12px solid #e30613; border-radius: 35px; padding: 25px; width: 85vh; height: 85vh; display: flex; flex-direction: column; box-sizing: border-box; }
-        h1 { font-size: 1.5rem; color: #444; margin: 0; }
-        h2 { font-size: 2.5rem; color: #e30613; margin: 5px 0; }
-        #date-box { font-size: 1.3rem; color: #888; }
-        /* Yemek Alanı - Yazılar Küçültüldü */
-        #menu-box { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; font-size: 2.2rem; font-weight: bold; color: #222; line-height: 1.2; border-top: 2px solid #eee; border-bottom: 2px solid #eee; margin: 10px 0; }
-        .icon { fill: #e30613; margin: 5px 0; }
-        .footer { font-size: 1.5rem; color: #e30613; font-weight: bold; letter-spacing: 2px; }
+        body { 
+            background: #1a1a1a; 
+            margin: 0; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            font-family: 'Segoe UI', Arial, sans-serif; 
+        }
+
+        .square-box {
+            background: white;
+            width: 88vh; 
+            height: 88vh; 
+            border: 15px solid #e30613; 
+            border-radius: 40px;
+            display: flex;
+            flex-direction: column;
+            padding: 25px;
+            text-align: center;
+            box-sizing: border-box;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+        }
+
+        .header h1 { font-size: 1.6rem; color: #444; margin: 0; letter-spacing: 1px; }
+        .header h2 { font-size: 2.6rem; color: #e30613; margin: 5px 0; font-weight: 900; }
+        #date-label { font-size: 1.3rem; color: #888; margin-bottom: 5px; }
+        
+        .divider { border-top: 2px solid #eee; margin: 10px 0; }
+
+        .menu-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            font-size: 2.2rem; /* Taşmayı önlemek için küçültüldü */
+            font-weight: bold;
+            color: #222;
+            line-height: 1.25;
+            padding: 0 10px;
+        }
+
+        /* Yeni Logo Kutusu */
+        .logo-box { 
+            margin: 10px 0; 
+            height: 100px; /* Logo yüksekliği */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .logo-box img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+        }
+        
+        .footer { 
+            font-size: 1.6rem; 
+            color: #e30613; 
+            font-weight: bold; 
+            letter-spacing: 3px;
+        }
     </style>
 </head>
 <body>
-    <div class="box">
-        <h2>YEMEK MENÜSÜ</h2>
-        <div id="date-box">Tarih Bekleniyor...</div>
-        <div id="menu-box">Menü Bekleniyor...</div>
-        <div class="icon">
-            <svg width="45" height="45" viewBox="0 0 512 512"><path d="M416 0C363 0 320 43 320 96v128h-32V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v128h-32V96c0-53-43-96-96-96S0 43 0 96v224c0 35.3 28.7 64 64 64h64v96c0 17.7 14.3 32 32 32s32-14.3 32-32v-96h64c35.3 0 64-28.7 64-64V96c0-53-43-96-96-96zM96 320H64V96c0-17.7 14.3-32 32-32s32 14.3 32 32v224c0 17.7-14.3 32-32 32zm320 128h-32V256h32v192zm0-256V96c0-17.7 14.3-32 32-32s32 14.3 32 32v352c0 17.7-14.3 32-32 32s-32-14.3-32-32V192z"/></svg>
+    <div class="square-box">
+        <div class="header">
+            <h1>BİLGE KOLEJİ</h1>
+            <h2>YEMEK MENÜSÜ</h2>
+            <div id="date-label">--.--.----</div>
         </div>
+        
+        <div class="divider"></div>
+        
+        <div id="menu-area" class="menu-content">
+            Yükleniyor...
+        </div>
+        
+        <div class="divider"></div>
+
+        <div class="logo-box">
+            <img src="https://drive.google.com/uc?export=view&id=1ij6L2LMOHbry8nahXaEZSLeP7VMyg3g1" alt="Bilge Koleji Logo">
+        </div>
+        
         <div class="footer">AFİYET OLSUN</div>
     </div>
 
     <script>
-        // PDF'deki Menü Verileri 
-        const data = {
+        const liste = {
             "30.01.2026": "1.KURU KÖFTE PATATES<br>2.ERİŞTE<br>3.TARHANA ÇORBASI<br>4.SALATA",
-            "29.01.2026": "1.ETLİ MEVSİM TÜRLÜSÜ<br>2.MAKARNA (SOSLU)<br>3.MERCİMEK ÇORBASI<br>4.TATLI"
+            "29.01.2026": "1.ETLİ MEVSİM TÜRLÜSÜ<br>2.MAKARNA (SOSLU)<br>3.MERCİMEK ÇORBASI<br>4.TATLI",
+            "28.01.2026": "1.FIRIN PİLİÇ PİRZOLA<br>2.SEB.BULGUR PİLAVI<br>3.DOMATES ÇORBASI<br>4.CACIK"
         };
 
-        function update() {
+        function baslat() {
             try {
-                const now = new Date();
-                const d = String(now.getDate()).padStart(2, '0');
-                const m = String(now.getMonth() + 1).padStart(2, '0');
-                const y = now.getFullYear();
-                const today = d + "." + m + "." + y;
+                const simdi = new Date();
+                const g = String(simdi.getDate()).padStart(2, '0');
+                const a = String(simdi.getMonth() + 1).padStart(2, '0');
+                const y = simdi.getFullYear();
+                const bugun = g + "." + a + "." + y;
 
-                document.getElementById('date-box').innerText = today;
-                
-                const menu = data[today];
-                if (menu) {
-                    document.getElementById('menu-box').innerHTML = menu;
+                document.getElementById('date-label').innerText = bugun;
+                const alan = document.getElementById('menu-area');
+
+                if (liste[bugun]) {
+                    alan.innerHTML = liste[bugun];
                 } else {
-                    document.getElementById('menu-box').innerHTML = "Bugün için kayıtlı<br>menü bulunamadı.";
+                    alan.innerHTML = "Bugün için kayıtlı<br>menü bulunamadı.";
                 }
-            } catch (err) {
-                document.getElementById('menu-box').innerHTML = "Hata: " + err.message;
-            }
+            } catch(e) { console.error(e); }
         }
-        // Sayfa yüklendiğinde çalıştır
-        update();
+        baslat();
     </script>
 </body>
 </html>
