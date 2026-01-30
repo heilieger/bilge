@@ -11,39 +11,50 @@
             justify-content: center; 
             align-items: center; 
             height: 100vh; 
-            font-family: sans-serif; 
+            font-family: 'Segoe UI', Arial, sans-serif; 
         }
-        /* Tam Kare Kutu Tasarımı */
+
         .square-box {
             background: white;
-            width: 90vh; /* Ekranın yüksekliğine göre kare genişliği */
-            height: 90vh; /* Genişlikle aynı yaparak kare sağlıyoruz */
-            border: 20px solid #e30613; /* Kurumsal Kırmızı */
-            border-radius: 50px;
+            width: 88vh; /* Ekran yüksekliğine göre kare genişliği */
+            height: 88vh; 
+            border: 15px solid #e30613; 
+            border-radius: 40px;
             display: flex;
             flex-direction: column;
-            padding: 30px;
+            padding: 25px;
             text-align: center;
             box-sizing: border-box;
             box-shadow: 0 10px 40px rgba(0,0,0,0.6);
         }
-        .header h1 { font-size: 2rem; color: #444; margin: 0; }
-        .header h2 { font-size: 3.5rem; color: #e30613; margin: 5px 0; font-weight: 900; }
-        #date-label { font-size: 1.8rem; color: #888; margin-bottom: 5px; }
-        .divider { border-top: 3px solid #eee; margin: 15px 0; }
-        /* Yemeklerin Olduğu Orta Alan */
+
+        .header h1 { font-size: 1.6rem; color: #444; margin: 0; letter-spacing: 1px; }
+        .header h2 { font-size: 2.8rem; color: #e30613; margin: 5px 0; font-weight: 900; }
+        #date-label { font-size: 1.4rem; color: #888; margin-bottom: 5px; }
+        
+        .divider { border-top: 2px solid #eee; margin: 10px 0; }
+
+        /* Yemek Alanı - Boyut Küçültüldü */
         .menu-content {
             flex-grow: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            font-size: 3rem; /* TV'den okunması için büyük font */
+            font-size: 2.4rem; /* Taşmayı önleyen ideal boyut */
             font-weight: bold;
             color: #222;
-            line-height: 1.3;
+            line-height: 1.25;
+            padding: 0 10px;
         }
-        .footer { font-size: 2rem; color: #e30613; font-weight: bold; margin-top: 10px; letter-spacing: 2px; }
-        .icon-box { fill: #e30613; margin-bottom: 5px; }
+
+        .icon-box { fill: #e30613; margin: 10px 0; }
+        
+        .footer { 
+            font-size: 1.6rem; 
+            color: #e30613; 
+            font-weight: bold; 
+            letter-spacing: 3px;
+        }
     </style>
 </head>
 <body>
@@ -53,9 +64,48 @@
             <h2>YEMEK MENÜSÜ</h2>
             <div id="date-label">--.--.----</div>
         </div>
+        
         <div class="divider"></div>
-        <div id="menu-area" class="menu-content">Yükleniyor...</div>
+        
+        <div id="menu-area" class="menu-content">
+            Yükleniyor...
+        </div>
+        
         <div class="divider"></div>
+
         <div class="icon-box">
-            <svg width="60" height="60" viewBox="0 0 512 512">
-                <path d="M416 0C363 0 320 43 320 96v128h-32V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v128h-32V96c0-53-43-96-96-96S0 43 0 96v224c0 35.3 28.7 64 64 64h64v96c0 17.7 14.3 32 32 32s32-14.3 32-32v-96h64c35.3 0 64-28.7 64-64V96c0-53-43-96-96-96zM96 320
+            <svg width="50" height="50" viewBox="0 0 512 512">
+                <path d="M416 0C363 0 320 43 320 96v128h-32V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v128h-32V96c0-53-43-96-96-96S0 43 0 96v224c0 35.3 28.7 64 64 64h64v96c0 17.7 14.3 32 32 32s32-14.3 32-32v-96h64c35.3 0 64-28.7 64-64V96c0-53-43-96-96-96zM96 320H64V96c0-17.7 14.3-32 32-32s32 14.3 32 32v224c0 17.7-14.3 32-32 32zm320 128h-32V256h32v192zm0-256V96c0-17.7 14.3-32 32-32s32 14.3 32 32v352c0 17.7-14.3 32-32 32s-32-14.3-32-32V192z"/>
+            </svg>
+        </div>
+        
+        <div class="footer">AFİYET OLSUN</div>
+    </div>
+
+    <script>
+        const liste = {
+            "30.01.2026": "1.KURU KÖFTE PATATES<br>2.ERİŞTE<br>3.TARHANA ÇORBASI<br>4.SALATA",
+            "29.01.2026": "1.ETLİ MEVSİM TÜRLÜSÜ<br>2.MAKARNA (SOSLU)<br>3.MERCİMEK ÇORBASI<br>4.TATLI",
+            "28.01.2026": "1.FIRIN PİLİÇ PİRZOLA<br>2.SEB.BULGUR PİLAVI<br>3.DOMATES ÇORBASI<br>4.CACIK"
+        };
+
+        function baslat() {
+            const simdi = new Date();
+            const g = String(simdi.getDate()).padStart(2, '0');
+            const a = String(simdi.getMonth() + 1).padStart(2, '0');
+            const y = simdi.getFullYear();
+            const bugun = g + "." + a + "." + y;
+
+            document.getElementById('date-label').innerText = bugun;
+            const alan = document.getElementById('menu-area');
+
+            if (liste[bugun]) {
+                alan.innerHTML = liste[bugun];
+            } else {
+                alan.innerHTML = "Bugün için kayıtlı<br>menü bulunamadı.";
+            }
+        }
+        baslat();
+    </script>
+</body>
+</html>
