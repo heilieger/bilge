@@ -1,0 +1,32 @@
+const menuler = {
+    "05.01.2026": "Sebzeli Fırın Baget<br>Bulgur Pilavı<br>Cacık<br>Meyve",
+    "06.01.2026": "Etli Taze Fasulye<br>Makarna<br>Tavuk Çorbası<br>Tatlı",
+    "07.01.2026": "İzmir Kumru (Dürüm)<br>Ezogelin Çorbası<br>İçecek<br>Salata",
+    "08.01.2026": "Mantarlı Seb. Kebap<br>Pirinç Pilavı<br>Domates Çorbası<br>Çiğ Köfte",
+    "09.01.2026": "Fırın Piliç Şinitzel<br>Soslu Makarna<br>Osmanlı Çorbası",
+    "12.01.2026": "Sebzeli Şakşuka<br>Makarna<br>Mercimek Çorbası<br>Yoğurt",
+    "13.01.2026": "Etli Kuru Fasulye<br>Pirinç Pilavı<br>Ayran Aşı Çorbası<br>Börek-Turşu",
+    "14.01.2026": "Sebzeli Parmak Köfte<br>Bulgur Pilavı<br>Tarhana Çorbası<br>Meyve",
+    "15.01.2026": "Piliç Çökertme Kebabı<br>Erişte<br>Tel Şehriye Çorbası<br>Salata",
+    "16.01.2026": "KIYMALI MAKARNA<br>SÜZ.MERCİMEK ÇORBASI<br>YOĞURT<br>TATLI",
+    "19.01.2026": "ETLİ EV MANTISI<br>MERCİMEK ÇORBASI<br>YOĞURT<br>ÇİĞKÖFTE",
+    "20.01.2026": "PİLİÇ DÖNER (DÜRÜM)<br>DÜĞÜN ÇORBASI<br>İÇECEK<br>TATLI",
+    "21.01.2026": "ETLİ PATATES YAHNİ<br>NOHUTLU PİRİNÇ PİLAVI<br>KESME ÇORBASI<br>CACIK",
+    "22.01.2026": "PİLİÇ FIRIN NUGGET<br>MAKARNA<br>OSMANLI ÇORBASI<br>RUS SALATASI",
+    "23.01.2026": "SOSLU MİSKET KÖFTE<br>SEB.BULGUR PİLAVI<br>AYRAN AŞI ÇORBASI<br>MEYVE",
+    "26.01.2026": "BAHARATLI SEB. KIZARTMA<br>MAKARNA<br>EZOGELİN ÇORBASI<br>YOĞURT",
+    "27.01.2026": "ETLİ NOHUT<br>TEL ŞEH.PİRİNÇ PİLAVI<br>DÜĞÜN ÇORBASI<br>TURŞU-MEYVE",
+    "28.01.2026": "FIRIN PİLİÇ PİRZOLA<br>SEB.BULGUR PİLAVI<br>DOMATES ÇORBASI<br>CACIK",
+    "29.01.2026": "ETLİ MEVSİM TÜRLÜSÜ<br>MAKARNA (SOSLU)<br>MERCİMEK ÇORBASI<br>TATLI",
+    "30.01.2026": "KURU KÖFTE PATATES<br>ERİŞTE<br>TARHANA ÇORBASI<br>SALATA"
+};
+
+function guncelle() {
+    const simdi = new Date();
+    const tarih = simdi.toLocaleDateString('tr-TR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+    document.getElementById('tarih').innerText = tarih;
+    
+    const menu = menuler[tarih];
+    document.getElementById('menu-liste').innerHTML = menu ? menu : "Bugün için menü<br>tanımlanmamış.";
+}
+guncelle();
