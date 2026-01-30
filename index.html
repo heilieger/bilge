@@ -4,108 +4,58 @@
     <meta charset="UTF-8">
     <title>Bilge Koleji Yemek Menüsü</title>
     <style>
-        body {
-            background: #1a1a1a;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            font-family: 'Segoe UI', sans-serif;
+        body { 
+            background: #1a1a1a; 
+            margin: 0; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            font-family: sans-serif; 
         }
-
+        /* Tam Kare Kutu Tasarımı */
         .square-box {
             background: white;
-            width: 85vh;
-            height: 85vh;
-            border: 20px solid #e30613;
+            width: 90vh; /* Ekranın yüksekliğine göre kare genişliği */
+            height: 90vh; /* Genişlikle aynı yaparak kare sağlıyoruz */
+            border: 20px solid #e30613; /* Kurumsal Kırmızı */
             border-radius: 50px;
-            box-sizing: border-box;
             display: flex;
             flex-direction: column;
-            padding: 40px;
+            padding: 30px;
             text-align: center;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+            box-sizing: border-box;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
         }
-
-        h1 { font-size: 2.2rem; color: #444; margin: 0; letter-spacing: 2px; }
-        h2 { font-size: 3.5rem; color: #e30613; margin: 5px 0; font-weight: 900; }
-        .date { font-size: 1.8rem; color: #888; margin-bottom: 10px; }
-
+        .header h1 { font-size: 2rem; color: #444; margin: 0; }
+        .header h2 { font-size: 3.5rem; color: #e30613; margin: 5px 0; font-weight: 900; }
+        #date-label { font-size: 1.8rem; color: #888; margin-bottom: 5px; }
+        .divider { border-top: 3px solid #eee; margin: 15px 0; }
+        /* Yemeklerin Olduğu Orta Alan */
         .menu-content {
             flex-grow: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            font-size: 3rem;
+            font-size: 3rem; /* TV'den okunması için büyük font */
             font-weight: bold;
             color: #222;
             line-height: 1.3;
-            border-top: 2px solid #eee;
-            border-bottom: 2px solid #eee;
-            margin: 15px 0;
         }
-
-        /* İkon Stili */
-        .icon-container {
-            margin-top: 20px;
-            fill: #e30613; /* İkon Rengi Kırmızı */
-        }
-        
-        .footer { 
-            font-size: 2.2rem; 
-            color: #e30613; 
-            font-weight: bold; 
-            margin-top: 10px;
-            letter-spacing: 3px;
-        }
+        .footer { font-size: 2rem; color: #e30613; font-weight: bold; margin-top: 10px; letter-spacing: 2px; }
+        .icon-box { fill: #e30613; margin-bottom: 5px; }
     </style>
 </head>
 <body>
     <div class="square-box">
-        <div>
-            <h2>GÜNÜN MENÜSÜ</h2>
-            <div id="date-label" class="date">--.--.----</div>
+        <div class="header">
+            <h1>BİLGE KOLEJİ</h1>
+            <h2>YEMEK MENÜSÜ</h2>
+            <div id="date-label">--.--.----</div>
         </div>
-        
-        <div id="menu-area" class="menu-content">
-            Menü Yükleniyor...
-        </div>
-
-        <div class="icon-container">
-            <svg width="80" height="80" viewBox="0 0 512 512">
-                <path d="M416 0C363 0 320 43 320 96v128h-32V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v128h-32V96c0-53-43-96-96-96S0 43 0 96v224c0 35.3 28.7 64 64 64h64v96c0 17.7 14.3 32 32 32s32-14.3 32-32v-96h64c35.3 0 64-28.7 64-64V96c0-53-43-96-96-96zM96 320H64V96c0-17.7 14.3-32 32-32s32 14.3 32 32v224c0 17.7-14.3 32-32 32zm320 128h-32V256h32v192zm0-256V96c0-17.7 14.3-32 32-32s32 14.3 32 32v352c0 17.7-14.3 32-32 32s-32-14.3-32-32V192z"/>
-            </svg>
-        </div>
-
-        <div class="footer">AFİYET OLSUN</div>
-    </div>
-
-    <script>
-        const menuData = {
-            "30.01.2026": "Kuru Köfte Patates<br>Erişte<br>Tarhana Çorbası<br>Salata",
-            "29.01.2026": "Etli Mevsim Türlüsü<br>Soslu Makarna<br>Mercimek Çorbası<br>Tatlı"
-        };
-
-        function update() {
-            try {
-                const now = new Date();
-                const d = String(now.getDate()).padStart(2, '0');
-                const m = String(now.getMonth() + 1).padStart(2, '0');
-                const y = now.getFullYear();
-                const today = d + "." + m + "." + y;
-
-                document.getElementById('date-label').innerText = today;
-                const area = document.getElementById('menu-area');
-
-                if (menuData[today]) {
-                    area.innerHTML = menuData[today];
-                } else {
-                    area.innerHTML = "Bugün için menü<br>girilmemiş.";
-                }
-            } catch(e) { console.log(e); }
-        }
-        window.onload = update;
-    </script>
-</body>
-</html>
+        <div class="divider"></div>
+        <div id="menu-area" class="menu-content">Yükleniyor...</div>
+        <div class="divider"></div>
+        <div class="icon-box">
+            <svg width="60" height="60" viewBox="0 0 512 512">
+                <path d="M416 0C363 0 320 43 320 96v128h-32V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v128h-32V96c0-53-43-96-96-96S0 43 0 96v224c0 35.3 28.7 64 64 64h64v96c0 17.7 14.3 32 32 32s32-14.3 32-32v-96h64c35.3 0 64-28.7 64-64V96c0-53-43-96-96-96zM96 320
