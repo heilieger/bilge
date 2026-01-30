@@ -2,102 +2,61 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bilge Koleji Yemek Menüsü</title>
     <style>
-        /* CSS BURADA */
-        body {
-            background-color: #2c2c2c;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        .container {
-            background-color: white;
-            width: 90%;
-            max-width: 900px;
-            border: 15px solid #e30613;
-            border-radius: 50px;
-            padding: 40px;
-            text-align: center;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-        }
-        h1 { font-size: 2.2rem; color: #444; margin: 0; }
-        h2 { font-size: 4rem; color: #e30613; margin: 10px 0; font-weight: 900; }
-        .date { font-size: 1.8rem; color: #888; margin-bottom: 25px; }
-        .menu-content {
-            font-size: 3.2rem;
-            font-weight: bold;
-            color: #222;
-            line-height: 1.3;
-            min-height: 250px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        .footer { margin-top: 35px; font-size: 2rem; color: #e30613; font-weight: bold; letter-spacing: 5px; }
+        /* Tasarım Ayarları */
+        body { background: #1a1a1a; margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; font-family: sans-serif; }
+        .card { background: white; border: 15px solid #ff0000; border-radius: 40px; padding: 40px; text-align: center; width: 85%; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        h1 { font-size: 2.5rem; color: #444; margin: 0; }
+        h2 { font-size: 4rem; color: #ff0000; margin: 10px 0; border-bottom: 2px solid #ddd; padding-bottom: 10px; }
+        .tarih-etiket { font-size: 1.8rem; color: #777; margin-bottom: 20px; }
+        .menu-liste { font-size: 3.2rem; line-height: 1.3; font-weight: bold; color: #222; min-height: 200px; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>BİLGE KOLEJİ</h1>
-            <h2>GÜNÜN YEMEK MENÜSÜ</h2>
-            <div id="tarih" class="date">---</div>
-        </div>
-        <div id="menu-alani" class="menu-content">
-            Menü Hazırlanıyor...
-        </div>
-        <div class="footer">AFİYET OLSUN</div>
+    <div class="card">
+        <h1>BİLGE KOLEJİ</h1>
+        <h2>GÜNÜN MENÜSÜ</h2>
+        <div id="tarih-alanı" class="tarih-etiket">Tarih Belirleniyor...</div>
+        <div id="menu-alanı" class="menu-liste">Menü Bekleniyor...</div>
     </div>
 
     <script>
-        // JAVASCRIPT BURADA
-        const menuVerisi = {
-            "05.01.2026": "1. Sebzeli Fırın Baget<br>2. Bulgur Pilavı<br>3. Cacık<br>4. Meyve",
-            "06.01.2026": "1. Etli Taze Fasulye<br>2. Makarna<br>3. Tavuk Çorbası<br>4. Tatlı",
-            "07.01.2026": "1. İzmir Kumru (Dürüm)<br>2. Ezogelin Çorbası<br>3. İçecek<br>4. Salata",
-            "08.01.2026": "1. Mantarlı Seb. Kebap<br>2. Pirinç Pilavı<br>3. Domates Çorbası<br>4. Çiğ Köfte",
-            "09.01.2026": "1. Fırın Piliç Şinitzel<br>2. Soslu Makarna<br>3. Osmanlı Çorbası",
-            "12.01.2026": "1. Sebzeli Şakşuka<br>2. Makarna<br>3. Mercimek Çorbası<br>4. Yoğurt",
-            "13.01.2026": "1. Etli Kuru Fasulye<br>2. Pirinç Pilavı<br>3. Ayran Aşı Çorbası<br>4. Börek - Turşu",
-            "14.01.2026": "1. Sebzeli Parmak Köfte<br>2. Bulgur Pilavı<br>3. Tarhana Çorbası<br>4. Meyve",
-            "15.01.2026": "1. Piliç Çökertme Kebabı<br>2. Erişte<br>3. Tel Şehrİye Çorbası<br>4. Salata",
-            "16.01.2026": "1. Kıymalı Makarna<br>2. Mercimek Çorbası<br>3. Yoğurt<br>4. Tatlı",
-            "19.01.2026": "1. Etli Ev Mantısı<br>2. Mercimek Çorbası<br>3. Yoğurt<br>4. Çiğ Köfte",
-            "20.01.2026": "1. Piliç Döner (Dürüm)<br>2. Düğün Çorbası<br>3. İçecek<br>4. Tatlı",
-            "21.01.2026": "1. Etli Patates Yahni<br>2. Pirinç Pilavı<br>3. Kesme Çorbası<br>4. Cacık",
-            "22.01.2026": "1. Piliç Fırın Nugget<br>2. Makarna<br>3. Osmanlı Çorbası<br>4. Rus Salatası",
-            "23.01.2026": "1. Soslu Misket Köfte<br>2. Bulgur Pilavı<br>3. Ayran Aşı Çorbası<br>4. Meyve",
-            "26.01.2026": "1. Sebze Kızartma<br>2. Makarna<br>3. Ezogelin Çorbası<br>4. Yoğurt",
-            "27.01.2026": "1. Etli Nohut<br>2. Pirinç Pilavı<br>3. Düğün Çorbası<br>4. Turşu - Meyve",
-            "28.01.2026": "1. Fırın Piliç Pirzola<br>2. Bulgur Pilavı<br>3. Domates Çorbası<br>4. Cacık",
-            "29.01.2026": "1. Etli Mevsim Türlüsü<br>2. Soslu Makarna<br>3. Mercimek Çorbası<br>4. Tatlı",
-            "30.01.2026": "1. Kuru Köfte Patates<br>2. Erişte<br>3. Tarhana Çorbası<br>4. Salata"
+        // PDF'teki Veriler (30.01.2026 dahil)
+        const menuVerileri = {
+            "05.01.2026": "Sebzeli Fırın Baget<br>Bulgur Pilavı<br>Cacık<br>Meyve",
+            "12.01.2026": "Sebzeli Şakşuka<br>Makarna<br>Mercimek Çorbası<br>Yoğurt",
+            "19.01.2026": "Etli Ev Mantısı<br>Mercimek Çorbası<br>Yoğurt<br>Çiğ Köfte",
+            "26.01.2026": "Sebze Kızartma<br>Makarna<br>Ezogelin<br>Yoğurt",
+            "27.01.2026": "Etli Nohut<br>Pirinç Pilavı<br>Düğün Çorbası<br>Turşu",
+            "28.01.2026": "Fırın Piliç Pirzola<br>Bulgur Pilavı<br>Domates Çorbası<br>Cacık",
+            "29.01.2026": "Etli Mevsim Türlüsü<br>Soslu Makarna<br>Mercimek Çorbası<br>Tatlı",
+            "30.01.2026": "Kuru Köfte Patates<br>Erişte<br>Tarhana Çorbası<br>Salata"
         };
 
-        function menuGuncelle() {
-            const simdi = new Date();
-            const gun = String(simdi.getDate()).padStart(2, '0');
-            const ay = String(simdi.getMonth() + 1).padStart(2, '0');
-            const yil = simdi.getFullYear();
-            const tarihStr = `${gun}.${ay}.${yil}`;
+        function guncelle() {
+            try {
+                const simdi = new Date();
+                const gun = String(simdi.getDate()).padStart(2, '0');
+                const ay = String(simdi.getMonth() + 1).padStart(2, '0');
+                const yil = simdi.getFullYear();
+                const bugun = `${gun}.${ay}.${yil}`;
 
-            document.getElementById('tarih').innerText = tarihStr;
-            const alan = document.getElementById('menu-alani');
-
-            if (menuVerisi[tarihStr]) {
-                alan.innerHTML = menuVerisi[tarihStr];
-            } else {
-                alan.innerHTML = "Bugün için menü<br>tanımlanmamıştır.<br>Afiyet Olsun!";
+                document.getElementById('tarih-alanı').innerText = bugun;
+                
+                const menu = menuVerileri[bugun];
+                if (menu) {
+                    document.getElementById('menu-alanı').innerHTML = menu;
+                } else {
+                    document.getElementById('menu-alanı').innerHTML = "Bugün için menü<br>tanımlanmamış.";
+                }
+            } catch (hata) {
+                document.getElementById('menu-alanı').innerText = "Hata oluştu: " + hata;
             }
         }
-        
-        // İlk yükleme
-        window.onload = menuGuncelle;
+
+        // DOM hazır olduğunda çalıştır
+        window.onload = guncelle;
     </script>
 </body>
 </html>
