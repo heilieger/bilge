@@ -4,53 +4,52 @@
     <meta charset="UTF-8">
     <title>Bilge Koleji Menü</title>
     <style>
-        body { background: #222; color: white; margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; font-family: sans-serif; text-align: center; }
-        .box { background: white; color: black; border: 15px solid #ff0000; border-radius: 40px; padding: 30px; width: 85%; }
+        body { background: #1a1a1a; color: white; margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; font-family: sans-serif; text-align: center; }
+        .box { background: white; color: black; border: 15px solid #ff0000; border-radius: 40px; padding: 40px; width: 80%; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         h1 { font-size: 2.5rem; margin: 0; color: #444; }
         h2 { font-size: 4rem; color: #ff0000; margin: 10px 0; }
-        #tarih { font-size: 1.5rem; color: #888; margin-bottom: 20px; }
-        #menu { font-size: 3rem; font-weight: bold; line-height: 1.2; }
-        .debug { font-size: 0.8rem; color: #aaa; position: absolute; bottom: 10px; }
+        #date-field { font-size: 2rem; color: #888; margin-bottom: 20px; }
+        #menu-box { font-size: 3.5rem; font-weight: bold; color: #222; min-height: 200px; }
     </style>
 </head>
 <body>
     <div class="box">
         <h1>BİLGE KOLEJİ</h1>
         <h2>GÜNÜN MENÜSÜ</h2>
-        <div id="tarih">Tarih Okunuyor...</div>
-        <div id="menu">Menü Yükleniyor...</div>
+        <div id="date-field">Tarih Bekleniyor...</div>
+        <div id="menu-box">JavaScript Başlatılamadı!</div>
     </div>
-    <div id="debug-info" class="debug">JS Bekleniyor...</div>
 
     <script>
-        // PDF'TEN ÇIKARILAN MENÜ VERİSİ
-        const menuData = {
+        // PDF'deki Menü (30.01.2026 Bugün Dahil)
+        const menus = {
             "30.01.2026": "Kuru Köfte Patates<br>Erişte<br>Tarhana Çorbası<br>Salata",
-            "29.01.2026": "Etli Mevsim Türlüsü<br>Soslu Makarna<br>Mercimek Çorbası<br>Tatlı",
-            "28.01.2026": "Fırın Piliç Pirzola<br>Bulgur Pilavı<br>Domates Çorbası<br>Cacık"
+            "29.01.2026": "Etli Mevsim Türlüsü<br>Soslu Makarna<br>Mercimek Çorbası<br>Tatlı"
         };
 
-        try {
-            document.getElementById('debug-info').innerText = "JS Başladı...";
-            
-            const d = new Date();
-            const gun = String(d.getDate()).padStart(2, '0');
-            const ay = String(d.getMonth() + 1).padStart(2, '0');
-            const yil = d.getFullYear();
-            const bugun = gun + "." + ay + "." + yil;
+        function start() {
+            try {
+                const now = new Date();
+                const d = String(now.getDate()).padStart(2, '0');
+                const m = String(now.getMonth() + 1).padStart(2, '0');
+                const y = now.getFullYear();
+                const today = d + "." + m + "." + y;
 
-            document.getElementById('tarih').innerText = bugun;
-            document.getElementById('debug-info').innerText = "Bugün: " + bugun;
-
-            const yemek = menuData[bugun];
-            if (yemek) {
-                document.getElementById('menu').innerHTML = yemek;
-            } else {
-                document.getElementById('menu').innerHTML = "Bu tarih için<br>kayıt bulunamadı.";
+                document.getElementById('date-field').innerText = today;
+                
+                const yemek = menus[today];
+                if (yemek) {
+                    document.getElementById('menu-box').innerHTML = yemek;
+                } else {
+                    document.getElementById('menu-box').innerHTML = "Bu tarih için<br>menü girilmemiş.";
+                }
+            } catch (e) {
+                document.getElementById('menu-box').innerHTML = "HATA: " + e.message;
             }
-        } catch (err) {
-            document.getElementById('menu').innerText = "Hata: " + err.message;
         }
+
+        // Sayfa yüklenince doğrudan çalıştır
+        start();
     </script>
 </body>
 </html>
