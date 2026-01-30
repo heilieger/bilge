@@ -14,11 +14,10 @@
             font-family: 'Segoe UI', Arial, sans-serif; 
         }
 
-        /* Tam Kare Kutu */
         .square-box {
             background: white;
-            width: 86vh; 
-            height: 86vh; 
+            width: 88vh; 
+            height: 88vh; 
             border: 15px solid #e30613; 
             border-radius: 45px;
             display: flex;
@@ -31,19 +30,18 @@
             overflow: hidden;
         }
 
-        /* Arka Plan Logosu (Watermark) */
-        .background-logo {
+        /* Arka Plan Logosu (İstediğin gibi yüksek opacity) */
+        .bg-watermark {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 70%; /* Logonun büyüklüğü */
-            opacity: 0.25; /* "Oposity yüksek" isteğine göre ayarlandı */
+            width: 80%; /* Logonun büyüklüğü */
+            opacity: 0.35; /* Yüksek şeffaflık ayarı */
             z-index: 1;
             pointer-events: none;
         }
 
-        /* İçerik Katmanı */
         .content-layer {
             position: relative;
             z-index: 2; /* Yazıları logonun önüne çıkartır */
@@ -55,19 +53,19 @@
         .header h2 { 
             font-size: 3.5rem; 
             color: #e30613; 
-            margin: 10px 0 5px 0; 
+            margin: 15px 0 5px 0; 
             font-weight: 900; 
             text-transform: uppercase;
         }
         
         #date-box { 
             font-size: 1.6rem; 
-            color: #888; 
+            color: #666; 
             font-weight: bold;
         }
         
         .divider { 
-            border-top: 2px solid #eee; 
+            border-top: 3px solid #eee; 
             margin: 15px 0; 
         }
 
@@ -76,14 +74,15 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            font-size: 2.4rem; 
+            font-size: 2.6rem; 
             font-weight: bold;
-            color: #111;
+            color: #000;
             line-height: 1.4;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.8); /* Arka plandaki logoda yazılar kaybolmasın diye */
         }
 
         .footer { 
-            font-size: 1.8rem; 
+            font-size: 2rem; 
             color: #e30613; 
             font-weight: bold; 
             letter-spacing: 4px;
@@ -93,4 +92,57 @@
 </head>
 <body>
     <div class="square-box">
-        <img src
+        <img src="i.png" class="bg-watermark" alt="Logo">
+
+        <div class="content-layer">
+            <div class="header">
+                <h2>YEMEK MENÜSÜ</h2>
+                <div id="date-box">--.--.----</div>
+            </div>
+            
+            <div class="divider"></div>
+            
+            <div id="menu-box">Sistem Başlatılıyor...</div>
+            
+            <div class="divider"></div>
+            
+            <div class="footer">AFİYET OLSUN</div>
+        </div>
+    </div>
+
+    <script>
+        // PDF'den gelen gerçek veriler 
+        var menuData = {
+            "30.01.2026": "1.KURU KÖFTE PATATES<br>2.ERİŞTE<br>3.TARHANA ÇORBASI<br>4.SALATA",
+            "29.01.2026": "1.ETLİ MEVSİM TÜRLÜSÜ<br>2.MAKARNA (SOSLU)<br>3.MERCİMEK ÇORBASI<br>4.TATLI",
+            "28.01.2026": "1.FIRIN PİLİÇ PİRZOLA<br>2.SEB.BULGUR PİLAVI<br>3.DOMATES ÇORBASI<br>4.CACIK"
+        };
+
+        function guncelle() {
+            try {
+                var simdi = new Date();
+                var g = String(simdi.getDate()).padStart(2, '0');
+                var a = String(simdi.getMonth() + 1).padStart(2, '0');
+                var y = simdi.getFullYear();
+                var bugunStr = g + "." + a + "." + y;
+
+                document.getElementById('date-box').innerText = bugunStr;
+                
+                var alan = document.getElementById('menu-box');
+                var yemek = menuData[bugunStr];
+
+                if (yemek) {
+                    alan.innerHTML = yemek;
+                } else {
+                    alan.innerHTML = bugunStr + " için<br>menü bulunamadı.";
+                }
+            } catch (err) {
+                document.getElementById('menu-box').innerHTML = "Kod Hatası: " + err.message;
+            }
+        }
+        
+        // Doğrudan çalıştır
+        guncelle();
+    </script>
+</body>
+</html>
