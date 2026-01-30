@@ -20,13 +20,13 @@
             overflow: hidden;
         }
 
-        /* Arka Plan Logosu - Oposity Yüksek */
+        /* Arka Plan Logosu - Ultra Şeffaf */
         .bg-img {
             position: absolute;
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            width: 85%;
-            opacity: 0.45; /* Görünürlüğü buradan artırabilirsin (0.1 - 0.9 arası) */
+            width: 80%;
+            opacity: 0.1; /* %10 Şeffaflık: Daha da şeffaf olması için 0.05 yapabilirsiniz */
             z-index: 1;
         }
 
@@ -45,8 +45,6 @@
             font-weight: bold;
             color: #000;
             line-height: 1.4;
-            /* Logo üzerinde yazıların okunması için hafif gölge */
-            text-shadow: 2px 2px 5px rgba(255,255,255,1);
         }
 
         .alt-yazi { font-size: 2rem; color: #e30613; font-weight: bold; letter-spacing: 5px; }
@@ -59,19 +57,4 @@
 
         <div class="layer">
             <h2>YEMEK MENÜSÜ</h2>
-            <div id="tarih-alanı">--.--.----</div>
-            <div class="cizgi"></div>
-            
-            <div id="menu-icerik">Menü Yükleniyor...</div>
-            
-            <div class="cizgi"></div>
-            <div class="alt-yazi">AFİYET OLSUN</div>
-        </div>
-    </div>
-
-    <script>
-        // Pi Zero uyumlu sadeleştirilmiş veriler
-        var liste = {
-            "30.01.2026": "1.KURU KÖFTE PATATES<br>2.ERİŞTE<br>3.TARHANA ÇORBASI<br>4.SALATA",
-            "29.01.2026": "1.ETLİ MEVSİM TÜRLÜSÜ<br>2.MAKARNA (SOSLU)<br>3.MERCİMEK ÇORBASI<br>4.TATLI",
-            "28.01.2026": "1.FIRIN PİLİÇ PİRZOLA<br>2.SEB.BULGUR PİL
+            <div id="tarih-alanı">
