@@ -4,29 +4,12 @@
     <meta charset="UTF-8">
     <title>Yemek Menüsü</title>
     <style>
-        /* Temel Hizalama */
-        body { 
-            background: #1a1a1a; 
-            margin: 0; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            height: 100vh; 
-            font-family: Arial, sans-serif; 
-        }
-
-        /* Kare Kutu ve Arka Plan Logosu */
+        body { background: #1a1a1a; margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; font-family: Arial, sans-serif; overflow: hidden; }
+        
+        /* Kare Kutu */
         .square-box {
             background-color: white;
-            background-image: url('i.png'); /* Logo buraya eklendi */
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: 70%; /* Logonun büyüklüğü */
-            /* Arka plan şeffaflığı için modern yöntem */
-            background-blend-mode: lighten;
-            
-            width: 88vh; 
-            height: 88vh;
+            width: 88vh; height: 88vh;
             border: 15px solid #e30613;
             border-radius: 40px;
             display: flex;
@@ -38,19 +21,24 @@
             box-shadow: 0 15px 50px rgba(0,0,0,0.6);
         }
 
-        /* Yazı Katmanı - Logonun Üzerinde Okunabilirlik İçin */
-        .content {
-            position: relative;
-            z-index: 5;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            background: rgba(255, 255, 255, 0.85); /* Logoyu biraz daha perdelemek için hafif beyazlık */
-            border-radius: 20px;
+        /* Ultra Şeffaf Arka Plan Logosu (Filigran) */
+        .square-box::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url('i.png');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 75%;
+            opacity: 0.07; /* %7 Şeffaflık - İstediğin gibi çok silik */
+            z-index: 1;
         }
 
+        /* İçerik Katmanı - Logonun Üstünde Kalması İçin */
+        .content { position: relative; z-index: 10; height: 100%; display: flex; flex-direction: column; }
+        
         h2 { font-size: 3.5rem; color: #e30613; margin: 15px 0 5px 0; font-weight: 900; }
-        #tarih-label { font-size: 1.6rem; color: #444; font-weight: bold; }
+        #tarih { font-size: 1.6rem; color: #444; font-weight: bold; }
         .divider { border-top: 3px solid #eee; margin: 15px 0; }
 
         #menu-text {
@@ -58,7 +46,7 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            font-size: 2.5rem; 
+            font-size: 2.4rem; 
             font-weight: bold;
             color: #000;
             line-height: 1.4;
@@ -72,7 +60,7 @@
     <div class="square-box">
         <div class="content">
             <h2>YEMEK MENÜSÜ</h2>
-            <div id="tarih-label">--.--.----</div>
+            <div id="tarih">--.--.----</div>
             <div class="divider"></div>
             
             <div id="menu-text">Yükleniyor...</div>
@@ -83,7 +71,7 @@
     </div>
 
     <script>
-        // En basit JS yapısı
+        // Pi Zero 2W için en ilkel ve en sağlam JS mantığı
         var veriler = {
             "30.01.2026": "1.KURU KÖFTE PATATES<br>2.ERİŞTE<br>3.TARHANA ÇORBASI<br>4.SALATA",
             "29.01.2026": "1.ETLİ MEVSİM TÜRLÜSÜ<br>2.MAKARNA (SOSLU)<br>3.MERCİMEK ÇORBASI<br>4.TATLI"
@@ -95,21 +83,23 @@
             var a = simdi.getMonth() + 1;
             var y = simdi.getFullYear();
 
+            // Tarih formatlama
             if (g < 10) g = "0" + g;
             if (a < 10) a = "0" + a;
-            
             var bugun = g + "." + a + "." + y;
-            document.getElementById('tarih-label').innerHTML = bugun;
-
-            var yemek = veriler[bugun];
-            if (yemek) {
-                document.getElementById('menu-text').innerHTML = yemek;
+            
+            // Veriyi Basma
+            document.getElementById('tarih').innerHTML = bugun;
+            var alan = document.getElementById('menu-text');
+            
+            if (veriler[bugun]) {
+                alan.innerHTML = veriler[bugun];
             } else {
-                document.getElementById('menu-text').innerHTML = bugun + "<br>Menü Hazırlanıyor...";
+                alan.innerHTML = bugun + "<br>Menü Bulunamadı.";
             }
         }
         
-        // Tarayıcı hazır olduğunda çalıştır
+        // Tarayıcıya "işini bitirince bunu yap" diyoruz
         window.onload = baslat;
     </script>
 </body>
