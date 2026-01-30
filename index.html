@@ -14,6 +14,7 @@
             font-family: 'Segoe UI', Arial, sans-serif; 
         }
 
+        /* Tam Kare Kutu */
         .square-box {
             background: white;
             width: 86vh; 
@@ -30,18 +31,19 @@
             overflow: hidden;
         }
 
-        /* Arka Plan Logosu (Filigran) */
-        .background-watermark {
+        /* Arka Plan Logosu (Watermark) */
+        .background-logo {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 75%; /* Logonun ekrandaki büyüklüğü */
-            opacity: 0.12; /* Şeffaflık (0.1-0.2 arası idealdir) */
+            width: 70%; /* Logonun büyüklüğü */
+            opacity: 0.25; /* "Oposity yüksek" isteğine göre ayarlandı */
             z-index: 1;
-            pointer-events: none; /* Yazıların seçilmesini engellemez */
+            pointer-events: none;
         }
 
+        /* İçerik Katmanı */
         .content-layer {
             position: relative;
             z-index: 2; /* Yazıları logonun önüne çıkartır */
@@ -51,7 +53,7 @@
         }
 
         .header h2 { 
-            font-size: 3.2rem; 
+            font-size: 3.5rem; 
             color: #e30613; 
             margin: 10px 0 5px 0; 
             font-weight: 900; 
@@ -59,7 +61,7 @@
         }
         
         #date-box { 
-            font-size: 1.5rem; 
+            font-size: 1.6rem; 
             color: #888; 
             font-weight: bold;
         }
@@ -74,7 +76,7 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            font-size: 2.3rem; 
+            font-size: 2.4rem; 
             font-weight: bold;
             color: #111;
             line-height: 1.4;
@@ -91,39 +93,4 @@
 </head>
 <body>
     <div class="square-box">
-        <img src="i.png" class="background-watermark" alt="Filigran">
-
-        <div class="content-layer">
-            <div class="header">
-                <h2>YEMEK MENÜSÜ</h2>
-                <div id="date-box">--.--.----</div>
-            </div>
-            
-            <div class="divider"></div>
-            
-            <div id="menu-box">Menü Yükleniyor...</div>
-            
-            <div class="divider"></div>
-            
-            <div class="footer">AFİYET OLSUN</div>
-        </div>
-    </div>
-
-    <script>
-        // PDF Verileri (30.01.2026 Bugün Dahil)
-        const liste = {
-            "30.01.2026": "1.KURU KÖFTE PATATES<br>2.ERİŞTE<br>3.TARHANA ÇORBASI<br>4.SALATA",
-            "29.01.2026": "1.ETLİ MEVSİM TÜRLÜSÜ<br>2.MAKARNA (SOSLU)<br>3.MERCİMEK ÇORBASI<br>4.TATLI",
-            "28.01.2026": "1.FIRIN PİLİÇ PİRZOLA<br>2.SEB.BULGUR PİLAVI<br>3.DOMATES ÇORBASI<br>4.CACIK"
-        };
-
-        function baslat() {
-            try {
-                const simdi = new Date();
-                const d = String(simdi.getDate()).padStart(2, '0');
-                const m = String(now = simdi.getMonth() + 1).toString().padStart(2, '0');
-                const y = simdi.getFullYear();
-                const bugun = d + "." + m + "." + y;
-
-                document.getElementById('date-box').innerText = bugun;
-                const alan = document.getElementById('menu-box');
+        <img src
