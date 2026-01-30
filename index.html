@@ -4,145 +4,74 @@
     <meta charset="UTF-8">
     <title>Yemek Menüsü</title>
     <style>
-        body { 
-            background: #1a1a1a; 
-            margin: 0; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            height: 100vh; 
-            font-family: 'Segoe UI', Arial, sans-serif; 
-        }
-
+        body { background: #1a1a1a; margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; font-family: Arial, sans-serif; }
+        
         .square-box {
             background: white;
-            width: 88vh; 
-            height: 88vh; 
-            border: 15px solid #e30613; 
-            border-radius: 45px;
+            width: 88vh; height: 88vh;
+            border: 15px solid #e30613;
+            border-radius: 40px;
             display: flex;
             flex-direction: column;
             padding: 30px;
             text-align: center;
             box-sizing: border-box;
-            box-shadow: 0 15px 50px rgba(0,0,0,0.6);
-            position: relative; /* Arka plan logosu için */
+            position: relative;
             overflow: hidden;
         }
 
-        /* Arka Plan Logosu (İstediğin gibi yüksek opacity) */
-        .bg-watermark {
+        /* Arka Plan Logosu - Oposity Yüksek */
+        .bg-img {
             position: absolute;
-            top: 50%;
-            left: 50%;
+            top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            width: 80%; /* Logonun büyüklüğü */
-            opacity: 0.35; /* Yüksek şeffaflık ayarı */
+            width: 85%;
+            opacity: 0.45; /* Görünürlüğü buradan artırabilirsin (0.1 - 0.9 arası) */
             z-index: 1;
-            pointer-events: none;
         }
 
-        .content-layer {
-            position: relative;
-            z-index: 2; /* Yazıları logonun önüne çıkartır */
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .header h2 { 
-            font-size: 3.5rem; 
-            color: #e30613; 
-            margin: 15px 0 5px 0; 
-            font-weight: 900; 
-            text-transform: uppercase;
-        }
+        .layer { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; }
         
-        #date-box { 
-            font-size: 1.6rem; 
-            color: #666; 
-            font-weight: bold;
-        }
-        
-        .divider { 
-            border-top: 3px solid #eee; 
-            margin: 15px 0; 
-        }
+        h2 { font-size: 3.5rem; color: #e30613; margin: 10px 0; font-weight: 900; }
+        #tarih-alanı { font-size: 1.6rem; color: #444; font-weight: bold; }
+        .cizgi { border-top: 3px solid #eee; margin: 15px 0; }
 
-        #menu-box {
+        #menu-icerik {
             flex-grow: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            font-size: 2.6rem; 
+            font-size: 2.5rem; 
             font-weight: bold;
             color: #000;
             line-height: 1.4;
-            text-shadow: 1px 1px 2px rgba(255,255,255,0.8); /* Arka plandaki logoda yazılar kaybolmasın diye */
+            /* Logo üzerinde yazıların okunması için hafif gölge */
+            text-shadow: 2px 2px 5px rgba(255,255,255,1);
         }
 
-        .footer { 
-            font-size: 2rem; 
-            color: #e30613; 
-            font-weight: bold; 
-            letter-spacing: 4px;
-            margin-top: 10px;
-        }
+        .alt-yazi { font-size: 2rem; color: #e30613; font-weight: bold; letter-spacing: 5px; }
     </style>
 </head>
 <body>
-    <div class="square-box">
-        <img src="i.png" class="bg-watermark" alt="Logo">
 
-        <div class="content-layer">
-            <div class="header">
-                <h2>YEMEK MENÜSÜ</h2>
-                <div id="date-box">--.--.----</div>
-            </div>
+    <div class="square-box">
+        <img src="i.png" class="bg-img" alt="Logo">
+
+        <div class="layer">
+            <h2>YEMEK MENÜSÜ</h2>
+            <div id="tarih-alanı">--.--.----</div>
+            <div class="cizgi"></div>
             
-            <div class="divider"></div>
+            <div id="menu-icerik">Menü Yükleniyor...</div>
             
-            <div id="menu-box">Sistem Başlatılıyor...</div>
-            
-            <div class="divider"></div>
-            
-            <div class="footer">AFİYET OLSUN</div>
+            <div class="cizgi"></div>
+            <div class="alt-yazi">AFİYET OLSUN</div>
         </div>
     </div>
 
     <script>
-        // PDF'den gelen gerçek veriler 
-        var menuData = {
+        // Pi Zero uyumlu sadeleştirilmiş veriler
+        var liste = {
             "30.01.2026": "1.KURU KÖFTE PATATES<br>2.ERİŞTE<br>3.TARHANA ÇORBASI<br>4.SALATA",
             "29.01.2026": "1.ETLİ MEVSİM TÜRLÜSÜ<br>2.MAKARNA (SOSLU)<br>3.MERCİMEK ÇORBASI<br>4.TATLI",
-            "28.01.2026": "1.FIRIN PİLİÇ PİRZOLA<br>2.SEB.BULGUR PİLAVI<br>3.DOMATES ÇORBASI<br>4.CACIK"
-        };
-
-        function guncelle() {
-            try {
-                var simdi = new Date();
-                var g = String(simdi.getDate()).padStart(2, '0');
-                var a = String(simdi.getMonth() + 1).padStart(2, '0');
-                var y = simdi.getFullYear();
-                var bugunStr = g + "." + a + "." + y;
-
-                document.getElementById('date-box').innerText = bugunStr;
-                
-                var alan = document.getElementById('menu-box');
-                var yemek = menuData[bugunStr];
-
-                if (yemek) {
-                    alan.innerHTML = yemek;
-                } else {
-                    alan.innerHTML = bugunStr + " için<br>menü bulunamadı.";
-                }
-            } catch (err) {
-                document.getElementById('menu-box').innerHTML = "Kod Hatası: " + err.message;
-            }
-        }
-        
-        // Doğrudan çalıştır
-        guncelle();
-    </script>
-</body>
-</html>
+            "28.01.2026": "1.FIRIN PİLİÇ PİRZOLA<br>2.SEB.BULGUR PİL
